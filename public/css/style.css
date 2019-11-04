@@ -1,0 +1,82 @@
+@import "https://fonts.googleapis.com/css?family=Courgette|Kanit:400,400i,500,500i,600,600i|Raleway:600,600i&display=swap";
+
+
+body {
+   font-family:'Kanit';
+   font-size:1.05rem;
+   font-weight:300;
+   background:url('../img/orange-bg.jpg') center -150px no-repeat fixed;
+   color:#333;
+   padding-top:60px;
+}
+p { font-size:1.05rem; }
+b { font-weight:500; }
+h1,h2,h3,h4,h5 { font-family:'Kanit'; font-weight:600; }
+h1 { font-size:1.5rem; }
+h2 { font-size:1.35rem; }
+h3 { font-size:1.2rem; }
+h4 { font-size:1.1rem; }
+h5 { font-size:0.98rem; }
+
+a { color:#333; }
+a:hover { text-decoration:underline; color:#BB0000; }
+
+
+
+.wrapper { 
+   width: 100%;
+   height: 0;
+   overflow: hidden;
+   margin: auto;
+   position: relative;
+   padding-bottom: 46.25%;
+   padding-top:0;
+ }
+
+.wrapper img  {
+   position: absolute;
+   left: -1000%;
+   right: -1000%;
+   top: -1000%;
+   bottom: -1000%;
+   margin: auto;
+   min-height: 100%;
+   min-width: 100%;
+   
+}
+
+.img-hover { position: relative; max-height: 100%; }
+.img-hover .pic a{ overflow: hidden; display: block; } 
+.img-hover .pic img { left: -1000%; right: -1000%; top: -1000%; bottom: -1000%; margin: auto; min-height: 100%; min-width: 100%; transition: 200ms; }
+.img-hover:hover .pic img { transform: scale(1.15); }
+
+
+.youtube { position: relative; width: 100%; height: 0; padding-bottom: 56.25%; padding-top:0; overflow: hidden; }
+.video { position: absolute; top: -1; left: -1; width: 100%; height: 100%; }
+#sidebar-scroll{ position: -webkit-sticky; position: sticky; top: 80px; }
+ul.update { list-style-type: none; margin: 0; padding: 0; }
+ul.update li { padding:0; overflow:auto; }
+ul.update li:hover { background:#ffeeee; }
+ul.update li a:hover { color:#BB0000; }
+ul.update li div { height:50px; display:block; overflow:hidden; }
+ul.update li img { width:100px; height:70px; float:left; padding:5px 15px 0 0; }
+
+.column {
+   float: left;
+   width: 50%;
+   padding: 10px;
+ }
+ 
+ /* Clear floats after image containers */
+ .row::after {
+   content: "";
+   clear: both;
+   display: table;
+ }
+
+.back-to-top {
+   position: fixed;
+   bottom: 25px;
+   right: 25px;
+   display: none;
+}
