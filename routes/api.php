@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 
 /*
@@ -13,9 +12,8 @@ use Illuminate\Http\Request;
 |
 */
 Route::resource('/line/','Api\LineController');
-//Route::get('/data', 'Api\DataController@index');
 Route::get('/data/item/', 'Api\DataController@index');
-//Route::get('/item/{slug}', 'Api\DataController@item');
+Route::get('/stepdata/', 'Api\DataController@stepdata');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

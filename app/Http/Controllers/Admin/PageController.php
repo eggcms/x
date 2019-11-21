@@ -43,38 +43,36 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+   public function store(Request $request)
+   {
+      $b_exists = DB::table('pages')->where('title', $request->input('title'))->exists();
+      if($b_exists) {
+         return redirect()->back()->withInput()->with('error', 'Error! Page Title has data already exists.');
+      }
 
+      $validatedData = $request->validate([
+         'title' => 'required',
+         'description' => 'required',
+         'content' => 'required',
+      ]);
 
-   $b_exists = DB::table('pages')->where('title', $request->input('title'))->exists();
-   if($b_exists) {
-      return redirect()->back()->withInput()->with('error', 'Error! Page Title has data already exists.');
-   }
+      $tag = $request->input('tag');
+      if ($tag == '') $tag = '';
+      $pages = new Page;
+      $pages->uid = \Auth::user()->id;
+      $pages->pid = 0;
+      $pages->title = $request->input('title');
+      $pages->description = $request->input('description');
+      $pages->content = $request->input('content');
+      $pages->tag = $tag;
+      if ($pages->slug != Str::slug($pages->title)) $pages->slug = Str::slug($pages->title);
+      $pages->status = ($request->input('status') == true) ? '1':'0';       
+      $pages->created_at = date('Y-m-d H:i:s');
+      $pages->updated_at = date('Y-m-d H:i:s');
+      $pages->visit = ($pages->visit == '')?0:$pages->visit;
 
-   $validatedData = $request->validate([
-      'title' => 'required',
-      'description' => 'required',
-      'content' => 'required',
-   ]);
-
-   $tag = $request->input('tag');
-   if ($tag == '') $tag = '';
-   $pages = new Page;
-   $pages->uid = \Auth::user()->id;
-   $pages->pid = 0;
-   $pages->title = $request->input('title');
-   $pages->description = $request->input('description');
-   $pages->content = $request->input('content');
-   $pages->tag = $tag;
-   if ($pages->slug != Str::slug($pages->title)) $pages->slug = Str::slug($pages->title);
-   $pages->status = ($request->input('status') == true) ? '1':'0';       
-   $pages->created_at = date('Y-m-d H:i:s');
-   $pages->updated_at = date('Y-m-d H:i:s');
-   $pages->visit = ($pages->visit == '')?0:$pages->visit;
-
-   $pages->save();
-   return redirect('/admin/page')->with('success','Success! New Page has been Created.');
+      $pages->save();
+      return redirect('/admin/page')->with('success','Success! New Page has been Created.');
 
    }
 
@@ -132,8 +130,8 @@ class PageController extends Controller
       $pages->description = $request->input('description');
       $pages->content = $request->input('content');
       $pages->tag = $tag;
-      $pages->status = ($request->input('status') == 1) ? 1:0;
-      $pages->created_at = $pages->created_at;
+//      $pages->status = ($request->input('status') == 1) ? 1:0;
+//      $pages->created_at = $pages->created_at;
       $pages->updated_at = date('Y-m-d H:i:s');        
       $pages->visit = ($pages->visit == '')?0:$pages->visit;
       if ($pages->slug != Str::slug($pages->title)) $pages->slug = Str::slug($pages->title);

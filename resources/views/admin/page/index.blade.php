@@ -3,7 +3,7 @@
 
 @if($cmd=='edit')
 @section('ckeditor')
-<script src="https://cdn.ckeditor.com/4.12.1/standard-all/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.12.1/full-all/ckeditor.js"></script> 
 @endsection
    @section('content')
    <div class="card-body rounded mb-4">
@@ -74,7 +74,7 @@
 
 @elseif($cmd=='index')
 @section('ckeditor')
-<script src="https://cdn.ckeditor.com/4.12.1/standard-all/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.12.1/full-all/ckeditor.js"></script>
 @endsection
 @section('content')
 <div class="card-body rounded mb-4">

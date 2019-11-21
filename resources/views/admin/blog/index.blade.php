@@ -308,7 +308,7 @@
                $mtags=DB::table('groups')->where('type',1)->where('status',1)->get();
                @endphp
                <div id="myTag" class="mt-4 p-2">
-               @if(count($mtags))
+               @if(count($mtags)!=null)
                   @foreach($mtags as $mtag)
                      <input type="button" class="tAdd btn btn-sm btn-outline-secondary" value="{{$mtag->title}}" />
                   @endforeach

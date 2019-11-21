@@ -12,7 +12,6 @@ $(document).ready(function() {
    });
 
 
-
    $('.alert[data-auto-dismiss]').each(function (index, element) {
       var $element = $(element),
           timeout  = $element.data('auto-dismiss') || 5000;
@@ -27,6 +26,9 @@ $(document).ready(function() {
       $("#alert-x").slideUp();
    });
 
+   $(".open_create").click(function() {
+    $("#create").slideToggle();
+  });
 
     $(".open_create_user").click(function() {
       $("#create_user").slideToggle();
@@ -53,10 +55,4 @@ $(document).ready(function() {
     }); 
 });
 
-function on() {
-  document.getElementById("overlay").style.display = "block";
-}
-function off() {
-  document.getElementById("overlay").style.display = "none";
-}
-{/* <div id="overlay" onclick="off()"><div id="text">Overlay Text</div></div> */}
+

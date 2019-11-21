@@ -98,7 +98,7 @@ class UserController extends Controller
          $extension = $request->file('image')->getClientOriginalExtension();
          $fileNameToStore = $filename.'_'.time().'.'.$extension;
          $cover_path  = str_replace('/','\\',public_path('storage/avatar/'));
-         $request->file('image')->storeAs('public/avatar',$fileNameToStore);    
+         $request->file('image')->move('storage/avatar',$fileNameToStore);
          $del_image = $cover_path.$request->old_image;
          if (file_exists($del_image) && $request->old_image!=null) {
              unlink($del_image);

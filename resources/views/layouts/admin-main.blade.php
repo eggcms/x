@@ -25,14 +25,14 @@
             <li class="nav-item {{ Request::is('*/user*')?'active':'' }}">
                <a class="nav-link" href="{{url('/admin/user')}}">Members</a>
             </li>  
-            <li class="nav-item dropdown {{ Request::is('*/setup*')?'active':'' }}">
+            <li class="nav-item dropdown {{ Request::is('*/setup*')?'active':'' }} {{ Request::is('*/menu*')?'active':'' }}">
                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                  Config
                </a>
                <div class="dropdown-menu">
                  <a class="dropdown-item" href="#">Link 1</a>
-                 <a class="dropdown-item" href="#">Link 2</a>
-                 <a class="dropdown-item" href="{{url('/admin/setup')}}">Config</a>
+                 <a class="dropdown-item" href="{{url('/admin/menu')}}">Setup menu</a>
+                 <a class="dropdown-item" href="{{url('/admin/setup')}}">Configuration</a>
                </div>
              </li>
             {{-- <li class="nav-item {{ Request::is('*/setup*')?'active':'' }}">
@@ -75,7 +75,7 @@
 
 
 @section('notify')
-<div style="position: absolute; top:8%; right:1%; left:70%;" id="alert-x">
+<div style="z-index:1; position: absolute; top:12%; right:1%; left:70%;" id="alert-x">
    @if(count($errors)>0)
       @foreach($errors->all() as $error)
       <div class="alert alert-danger alert-dismissible fade show" data-auto-dismiss="5000">

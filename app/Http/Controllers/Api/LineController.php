@@ -36,15 +36,10 @@ class LineController extends Controller
      */
     public function store(Request $request)
     {
-       //dd($request);
-       //http://line.me/ti/p/~
-      //  $fullname=$request->fullname;
-      //  $phone=$request->phone;
-      //  $line=$request->lineid;
-       $send='ชื่อ: '.$request->fullname.' | มือถือ: '.$request->phone.' | Link: http://line.me/ti/p/~'.$request->lineid;
-        return LineNotify($send);
+        $send='name: '.$request->fullname.' mobile: '.$request->phone.' LineID: http://line.me/ti/p/~'.$request->lineid;
+        LineNotify($send);
+        return view('home.index')->with('cmd','info')->with('info','ทำการส่งข้อมูลเรียบร้อย กรุณารอสักครู่ พนักงานจะติดต่อท่านกลับทางโปรแกรม line');
     }
-
     /**
      * Display the specified resource.
      *

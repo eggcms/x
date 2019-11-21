@@ -1,19 +1,14 @@
 <?php
-
+use Illuminate\Support\Facades\Artisan;
 use GuzzleHttp\Psr7\Request;
 
 Route::get('/', function(){
-//    $builds = DB::table('blogs')->where('frontpage', '1')->orderBy('id', 'desc')->paginate(20);
-//    return View::make('pages/home')->with('builds', $builds);
    return view('home.index')->with('cmd','index');
 });
 
 Route::get('/item/tag/{tag}', function($tag){
-   //dd('ok');
-      $tag=str_replace('-',' ',$tag);
-      $tags=DB::table('blogs')->where('title','LIKE','%'.$tag.'%')->orWhere('description','LIKE','%'.$tag.'%')->get();
-   //   dd($tags);
-   // $blog=DB::table('blogs')->where('id', $id)->where('status','1')->first();
+   $tag=str_replace('-',' ',$tag);
+   $tags=DB::table('blogs')->where('title','LIKE','%'.$tag.'%')->orWhere('description','LIKE','%'.$tag.'%')->get();
    return view('home.index')->with('blogs',$tags)->with('cmd','tags')->with('tag',$tag);   
 });
 
@@ -26,15 +21,18 @@ Route::get('/all/{id}/{slug}', function($id){
    return view('home.index')->with('blogs',$blogs)->with('cmd','group')->with('groupID',$id);   
 });
 
+Route::get('/page/{slug}', function($slug){
+   //dd('ok');
+   $page=DB::table('pages')->where('slug',$slug)->where('status','1')->first();
+   return view('home.index')->with('page',$page)->with('cmd','page');   
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
-//Auth::routes();
 Auth::routes([
    'register' => true,
    'reset' => false,
    'verify' => false,
- ]);
-
+]);
 
 //Route for normal user ( middleware/Authencate.php )
 Route::group(['middleware' => ['auth']], function () {
@@ -55,7 +53,14 @@ Route::group(['prefix' => 'admin'], function(){
       Route::resource('/result', 'Admin\ResultController');
       Route::resource('/league', 'Admin\LeagueController');
       Route::resource('/page', 'Admin\PageController');
+      Route::resource('/menu', 'Admin\MenuController');
    });
 });
 Route::get('ckeditor', 'CkeditorController@index');
-Route::post('ckeditor/upload', 'CkeditorController@upload')->name('ckeditor.upload');   
+Route::post('ckeditor/upload', 'CkeditorController@upload')->name('ckeditor.upload');
+
+
+Route::get('cc', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});

@@ -4,6 +4,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="csrf-token" content="{{ csrf_token() }}">
+      <link rel="shortcut icon" type="image/png" href="img/football-kick.png"/>
       <title>{{ config('app.name', 'Laravel') }}</title>
       <script src="{{ asset('js/jquery.js') }}"></script>
       <script src="{{ asset('js/bs-custom-file-input.js') }}"></script>

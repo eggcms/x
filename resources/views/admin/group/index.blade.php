@@ -5,16 +5,6 @@
    @section('content')
    <div class="card-body rounded mb-4">
       <div style="margin-bottom:15px;">
-            {{-- <div id="overlay" onclick="off()"><div id="text" class="p-2 rounded">Overlay Text</div></div>
-             <div id="overlay">
-               <div id="text">Overlay Text</div>
-             </div> --}}
-
-            {{-- <div style="padding:20px">
-              <h2>Overlay</h2>
-              <p>Add an overlay effect to the page content (100% width and height with a black background color with 50% opacity).</p>
-              <button onclick="on()">Turn on overlay effect</button>
-            </div> --}}
          <h1 id="" class="open_create_group mylink mb-4">Create group/tag/album</h1>
          <div id="create_group" style="display:none;">   
             <table style="width:100%">
@@ -35,7 +25,6 @@
                            <option value="2">Album</option>
                         </select>
                      </div>
-
                   </td>
                   <td valign="top">
                      <div class="form-group ml-2">
@@ -49,7 +38,6 @@
                </tr>
             </table>
          </div> 
-
       </div>
       <table width="100%">
          <tr>
@@ -128,7 +116,6 @@
                   @csrf
                   {!! Form::close() !!}
                   @endif         
-               
                </td>
             </tr>
             @endif
@@ -136,53 +123,26 @@
       </table>
 <hr class="my-4">
       <h3 >จัดการเกี่ยวกับ Tags</h3>
-      <table width="100%">
-            <tr>
-               <th width="5%" style="text-align:center">#</th>
-               <th>Tags</th>
-               <th width="5%"  style="text-align:center">Status</th>
-               <th width="5%"  style="text-align:center">Action</th>
-            </tr>
-            
-            @foreach($groups as $tag)
-               @if($tag->type == '1')
-               <tr class="hover">
-                  <td align="center">{{$tag->id}}</td>
-                  <td>
-                     <a href="{{Url('/admin/group/'.$tag->id.'/edit')}}">{{$tag->title}}</a>
-                  </td>
-                  @php
-                  if ($tag->status == 1) {
-                     $change='เปิด';
-                     $status='0';
-                     $btn='btn-outline-success';
-                  }
-                  else {
-                     $change=' ปิด';
-                     $status='1';
-                     $btn='btn-outline-dark';
-                  }
-                  @endphp
-
-                  <td style="vertical-align:text-top" align="center">
-                     {!! Form::open(['action'=>['Admin\GroupController@update',$tag->id],'method'=>'POST', ]) !!}
-                     {!! Form::hidden('_method', 'PUT')!!}
-                     {!!Form::hidden('switch','status')!!}
-                     {!! Form::submit(' &nbsp; '.$change.' &nbsp; ',['class'=>'btn border-0 '.$btn.' pt-1 pb-1']) !!}
-                     @csrf
-                     {!! Form::close() !!}          
-                  </td>
-                  <td align="center">
-                     {!! Form::open(['action'=>['Admin\GroupController@destroy',$tag->id],'method'=>'POST', ]) !!}
-                     {!! Form::hidden('_method', 'DELETE')!!}
-                     {!! Form::submit(' &nbsp; ลบ &nbsp; ',['class'=>'btn border-0 btn-outline-danger pt-1 pb-1','onclick'=>"return confirm('ลบบทความ #$tag->id แน่ใจ?');"]) !!}
-                     @csrf
-                     {!! Form::close() !!}
-                  </td>
-               </tr>
-               @endif
-            @endforeach
-      </table>
+      <div class="py-3">
+         @php $tags=DB::table('groups')->where('type',1)->orderBy('orders','asc')->get(); @endphp
+         @foreach($tags as $tag)
+            @php
+            if ($tag->status == 1) {
+               $change='เปิด';
+               $status='0';
+               $btn='btn-outline-primary';
+            }
+            else {
+               $change=' ปิด';
+               $status='1';
+               $btn='btn-outline-secondary';
+            }
+            @endphp
+            @if($tag->type == '1')
+               <a class="btn {{$btn}} btn-sm mb-2" href="{{Url('/admin/group/'.$tag->id.'/edit')}}">{{$tag->title}}</a>
+            @endif
+         @endforeach
+      </div>
    </div>
    @endsection
 
@@ -237,6 +197,35 @@
                   <a href="{{url('/admin/group')}}" class="ml-2 btn btn-success">&nbsp; &nbsp;ยกเลิก &nbsp; &nbsp;</a>
                   @csrf
                   {{ Form::close() }}
+                  <div class="form-group ml-2 mt-3">
+                  {!! Form::open(['action'=>['Admin\GroupController@destroy',$group->id],'method'=>'POST', ]) !!}
+                  {!! Form::hidden('_method', 'DELETE')!!}
+                  {!! Form::submit(' &nbsp; &nbsp; &nbsp; ลบ &nbsp; &nbsp; &nbsp;',['class'=>'btn btn-outline-danger pt-1 pb-1','onclick'=>"return confirm('ลบบทความ #$group->id แน่ใจ?');"]) !!}
+                  @csrf
+                  {!! Form::close() !!} 
+                  </div>
+               </td>
+            </tr>
+            <tr>
+               <td colspan="2">
+                     @php
+                     if ($group->status == 1) {
+                        $change='เปิดการใช้งานอยู่';
+                        $status='0';
+                        $btn='btn-outline-success';
+                     }
+                     else {
+                        $change=' ปิดการใช้งานอยู่';
+                        $status='1';
+                        $btn='btn-outline-dark';
+                     }
+                     @endphp
+                  {!! Form::open(['action'=>['Admin\GroupController@update',$group->id],'method'=>'POST', ]) !!}
+                  {!! Form::hidden('_method', 'PUT')!!}
+                  {!!Form::hidden('switch','status')!!}
+                  <span style="float:left;">{!! Form::submit(' &nbsp; '.$change.' &nbsp; ',['class'=>'btn '.$btn.' pt-1 pb-1']) !!}</span>
+                  @csrf
+                  {!! Form::close() !!}          
                </td>
             </tr>
          </table>
